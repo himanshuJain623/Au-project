@@ -1,7 +1,5 @@
 package com.au.models;
 
-
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,14 +22,14 @@ public class ProviderEntity {
 	@Column(name = "provider_name")
 	private String providerName;
 	
+	@NotBlank
+	@Column(name = "provider_email")
+	private String providerEmail;
 	
 	@NotBlank
 	@Column(name = "password")
 	private String password;
 	
-	@NotBlank
-	@Column(name = "provider_email")
-	private String providerEmail;
 	
 	@NotBlank
 	@NumberFormat

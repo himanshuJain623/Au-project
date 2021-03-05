@@ -17,7 +17,6 @@ public class ServiceEntityService {
 
 	public List<ServiceEntity> getAllServices() {
 		List<ServiceEntity> serviceList = serviceRepository.findAll();
-
 		if (serviceList.size() > 0) {
 			return serviceList;
 		} else {

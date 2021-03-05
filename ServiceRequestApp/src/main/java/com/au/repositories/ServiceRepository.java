@@ -7,5 +7,5 @@ import com.au.models.ServiceEntity;
 
 @Repository
 public interface ServiceRepository extends JpaRepository<ServiceEntity, Long> {
-	
+	ServiceEntity findByServiceName(String serviceName);
 }

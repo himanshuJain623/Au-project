@@ -7,6 +7,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
+import com.au.annotations.UniqueServiceName;
 
 @Entity
 @Table(name = "SERVICE_DETAILS")
@@ -15,8 +18,10 @@ public class ServiceEntity {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long serviceId;
 
+	@UniqueServiceName(message = "This service is already exists!")
 	@NotBlank
-	@Column(name = "service_name")
+	@Size(min = 3, message = "Name must be at least 3 character!")
+	@Column(name = "service_name", unique=true)
 	private String serviceName;
 
 	public ServiceEntity() {

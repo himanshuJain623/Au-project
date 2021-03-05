@@ -23,6 +23,7 @@ public class ProviderController {
 
 	@PostMapping("/signup")
     public void addUser(@RequestBody ProviderEntity user) {
+		System.out.println(user.getProviderName());
         provider.saveProvider(user);
     }
 

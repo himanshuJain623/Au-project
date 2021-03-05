@@ -1,5 +1,8 @@
 package com.au.controllers;
 
+import com.au.models.ServiceEntity;
+import com.au.services.ServiceEntityService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -10,15 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.au.models.ServiceEntity;
-import com.au.services.ServiceEntityService;
-
-import java.util.List;
 
 @RestController
-@RequestMapping("/service")
-public class ServiceController {
-
+@RequestMapping("/customer")
+public class CustomerController {
 	@Autowired
 	ServiceEntityService service;
 

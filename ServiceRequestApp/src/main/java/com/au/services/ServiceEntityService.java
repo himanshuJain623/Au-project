@@ -23,4 +23,8 @@ public class ServiceEntityService {
 			return new ArrayList<ServiceEntity>();
 		}
 	}
+	
+	public void addService(ServiceEntity serviceToAdd) {
+		serviceRepository.save(serviceToAdd);
+	}
 }

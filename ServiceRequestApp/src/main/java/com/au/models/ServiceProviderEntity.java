@@ -5,8 +5,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.NumberFormat;
@@ -14,48 +17,73 @@ import org.springframework.format.annotation.NumberFormat;
 @Entity
 @Table(name = "SERVICES_BY_PROVIDER")
 public class ServiceProviderEntity {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-    private int serviceId;
+	private Long sidId;
 
-//    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int providerId;
-    
-    @NotBlank
+	@ManyToOne
+	@JoinColumn(name = "serviceId", referencedColumnName = "serviceId")
+	private ServiceEntity serviceId;
+
+	@ManyToOne
+	@JoinColumn(name = "providerId", referencedColumnName = "providerId")
+	private ProviderEntity providerId;
+
+	@NotBlank
 	@Column(name = "service_description")
 	private String serviceDescription;
-    
-    @NotBlank
+
+	@NotNull
 	@NumberFormat
-	@Range(min=1, max=100)
-    @Column(name="discount")
-    private String discount;
-    
-    @NotBlank
+//	@Range(min = 1, max = 100)
+	@Column(name = "discount")
+	private int discount;
+
+	@NotNull
 	@NumberFormat
-    @Column(name="service_price")
-    private Long price;
+	@Column(name = "service_price")
+	private int price;
 
 	public ServiceProviderEntity() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public int getServiceId() {
+	public ServiceProviderEntity(Long sidId, ServiceEntity serviceId, ProviderEntity providerId,
+			@NotBlank String serviceDescription,
+			@NotBlank @Range(min = 1, max = 100) @NotBlank @Range(min = 1, max = 100) int discount,
+			@NotBlank @NotBlank int price) {
+		super();
+		this.sidId = sidId;
+		this.serviceId = serviceId;
+		this.providerId = providerId;
+		this.serviceDescription = serviceDescription;
+		this.discount = discount;
+		this.price = price;
+	}
+
+	public Long getSidId() {
+		return sidId;
+	}
+
+	public void setSidId(Long sidId) {
+		this.sidId = sidId;
+	}
+
+	public ServiceEntity getServiceId() {
 		return serviceId;
 	}
 
-	public void setServiceId(int serviceId) {
+	public void setServiceId(ServiceEntity serviceId) {
 		this.serviceId = serviceId;
 	}
 
-	public int getProviderId() {
+	public ProviderEntity getProviderId() {
 		return providerId;
 	}
 
-	public void setProviderId(int providerId) {
+	public void setProviderId(ProviderEntity providerId) {
 		this.providerId = providerId;
 	}
 
@@ -67,28 +95,20 @@ public class ServiceProviderEntity {
 		this.serviceDescription = serviceDescription;
 	}
 
-	public String getDiscount() {
+	public int getDiscount() {
 		return discount;
 	}
 
-	public void setDiscount(String discount) {
-		this.discount = discount;
+	public void setDiscount(int i) {
+		this.discount = i;
 	}
 
-	public Long getPrice() {
+	public int getPrice() {
 		return price;
 	}
 
-	public void setPrice(Long price) {
-		this.price = price;
+	public void setPrice(int i) {
+		this.price = i;
 	}
-
-	@Override
-	public String toString() {
-		return "ServiceProviderEntity [serviceId=" + serviceId + ", providerId=" + providerId + ", serviceDescription="
-				+ serviceDescription + ", discount=" + discount + ", price=" + price + "]";
-	}
-    
-    
 
 }

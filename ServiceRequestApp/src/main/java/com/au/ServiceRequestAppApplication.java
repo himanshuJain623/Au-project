@@ -25,11 +25,11 @@ public class ServiceRequestAppApplication implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 		
-		ServiceEntity service1 = new ServiceEntity(103l,"carpainter");
-		this.serviceRepository.save(service1);
-		
-		ServiceEntity service2 = new ServiceEntity(103l,"carpainter");
-		this.serviceRepository.save(service2);
+//		ServiceEntity service1 = new ServiceEntity(103l,"carpainter");
+//		this.serviceRepository.save(service1);
+//		
+//		ServiceEntity service2 = new ServiceEntity(103l,"carpainter");
+//		this.serviceRepository.save(service2);
 	}
 	
 }

@@ -1,10 +1,16 @@
 package com.au.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -18,11 +24,14 @@ public class ServiceEntity {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long serviceId;
 
-	@UniqueServiceName(message = "This service is already exists!")
+//	@UniqueServiceName(message = "This service is already exists!")
 	@NotBlank
 	@Size(min = 3, message = "Name must be at least 3 character!")
-	@Column(name = "service_name", unique=true)
+	@Column(name = "service_name", unique = true)
 	private String serviceName;
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "serviceId", cascade = CascadeType.ALL)
+	private List<ServiceProviderEntity> serviceProviderList = new ArrayList<>();
 
 	public ServiceEntity() {
 		super();
@@ -49,6 +58,14 @@ public class ServiceEntity {
 
 	public void setServiceName(String serviceName) {
 		this.serviceName = serviceName;
+	}
+
+	public List<ServiceProviderEntity> getServiceProviderList() {
+		return serviceProviderList;
+	}
+
+	public void setServiceProviderList(List<ServiceProviderEntity> serviceProviderList) {
+		this.serviceProviderList = serviceProviderList;
 	}
 
 	@Override

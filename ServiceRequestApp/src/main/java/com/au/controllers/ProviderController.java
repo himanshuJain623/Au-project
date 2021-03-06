@@ -1,6 +1,7 @@
 package com.au.controllers;
 
 import com.au.models.ProviderEntity;
+import com.au.models.ServiceProviderEntityModel;
 import com.au.services.ProviderEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,4 +28,9 @@ public class ProviderController {
         provider.saveProvider(user);
     }
 
+	@PostMapping("/service/addService")
+	public void addService(@RequestBody ServiceProviderEntityModel serviceToAdd) {
+		provider.getServicesByProvider(serviceToAdd);
+	}
+	
 }

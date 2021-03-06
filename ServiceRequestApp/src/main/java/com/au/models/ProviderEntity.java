@@ -1,10 +1,16 @@
 package com.au.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
@@ -42,6 +48,25 @@ public class ProviderEntity {
 	@Column(name = "provider_location")
 	private String providerLocation;
 	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "providerId", cascade = CascadeType.ALL)
+    private List<ServiceProviderEntity>  serviceProviderList = new ArrayList<>();
+	
+	public ProviderEntity() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
+	public ProviderEntity(Long providerId, @NotBlank String providerName, @NotBlank String password,
+			@NotBlank String providerEmail, @NotBlank @Length(min = 10, max = 10) String providerPhone,
+			@NotBlank String providerLocation) {
+		super();
+		this.providerId = providerId;
+		this.providerName = providerName;
+		this.password = password;
+		this.providerEmail = providerEmail;
+		this.providerPhone = providerPhone;
+		this.providerLocation = providerLocation;
+	}
 	
 	
 	public Long getProviderId() {
@@ -88,28 +113,16 @@ public class ProviderEntity {
 		return providerLocation;
 	}
 
-	public ProviderEntity(Long providerId, @NotBlank String providerName, @NotBlank String password,
-			@NotBlank String providerEmail, @NotBlank @Length(min = 10, max = 10) String providerPhone,
-			@NotBlank String providerLocation) {
-		super();
-		this.providerId = providerId;
-		this.providerName = providerName;
-		this.password = password;
-		this.providerEmail = providerEmail;
-		this.providerPhone = providerPhone;
-		this.providerLocation = providerLocation;
-	}
-
 	public void setProviderLocation(String providerLocation) {
 		this.providerLocation = providerLocation;
 	}
 
-	
-	
-	public ProviderEntity() {
-		super();
-		// TODO Auto-generated constructor stub
+	public List<ServiceProviderEntity> getServiceProviderList() {
+		return serviceProviderList;
 	}
-	
+
+	public void setServiceProviderList(List<ServiceProviderEntity> serviceProviderList) {
+		this.serviceProviderList = serviceProviderList;
+	}
 
 }

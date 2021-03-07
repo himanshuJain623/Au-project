@@ -16,6 +16,5 @@ public interface ServiceRepository extends JpaRepository<ServiceEntity, Long> {
 //	@Query(value = "SELECT * FROM SERVICE_DETAILS s where s.serviceId = :id", nativeQuery = true)
 //	List<ServiceEntity> findServiceById(@Param("id") Long id);
 
-
 	ServiceEntity findByServiceId(Long serviceId);
 }

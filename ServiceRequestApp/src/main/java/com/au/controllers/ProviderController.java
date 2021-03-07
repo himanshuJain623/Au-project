@@ -34,11 +34,9 @@ public class ProviderController {
 	@PostMapping("/signup")
 	public ResponseEntity<ProviderEntity> addUser(@RequestBody ProviderEntity user) {
 		ProviderEntity created_user = provider.saveProvider(user);
-		// proper message can be send (future functionality)
 		if (created_user == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
-		// carefully return object, this needs to be changed in future
 		return new ResponseEntity<>(created_user, HttpStatus.CREATED);
 	}
 
@@ -85,9 +83,11 @@ public class ProviderController {
 
 	@PutMapping("/booking/updateStatus")
 	public ResponseEntity updateBookingSatus(@RequestParam Long bookingId, @RequestParam String status) {
-		String updatedStatus = provider.updateBookingSatus(bookingId, status);
-		if (updatedStatus == null) {
+		int updatedStatus = provider.updateBookingSatus(bookingId, status);
+		if (updatedStatus == -1) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		} else if (updatedStatus == 0) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 		return new ResponseEntity<>(updatedStatus, HttpStatus.CREATED);
 	}

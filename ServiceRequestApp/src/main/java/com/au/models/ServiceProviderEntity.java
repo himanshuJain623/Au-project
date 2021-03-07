@@ -35,7 +35,7 @@ public class ServiceProviderEntity {
 
 	@NotNull
 	@NumberFormat
-//	@Range(min = 1, max = 100)
+	@Range(min = 1, max = 100)
 	@Column(name = "discount")
 	private int discount;
 

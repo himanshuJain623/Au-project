@@ -13,23 +13,10 @@ import com.au.models.ServiceEntity;
 import com.au.repositories.ServiceRepository;
 
 @SpringBootApplication
-public class ServiceRequestAppApplication implements CommandLineRunner{
+public class ServiceRequestAppApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ServiceRequestAppApplication.class, args);
 	}
-	
-	@Autowired
-	private ServiceRepository serviceRepository;
-	
-	@Override
-	public void run(String... args) throws Exception {
-		
-//		ServiceEntity service1 = new ServiceEntity(103l,"carpainter");
-//		this.serviceRepository.save(service1);
-//		
-//		ServiceEntity service2 = new ServiceEntity(103l,"carpainter");
-//		this.serviceRepository.save(service2);
-	}
-	
+
 }

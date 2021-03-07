@@ -30,9 +30,6 @@ public class ServiceEntity {
 	@Column(name = "service_name", unique = true)
 	private String serviceName;
 
-//	@OneToMany(mappedBy = "foreignServiceId")
-//	private List<ServiceProviderEntity> serviceProviderList = new ArrayList<>();
-
 	public ServiceEntity() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -59,14 +56,6 @@ public class ServiceEntity {
 	public void setServiceName(String serviceName) {
 		this.serviceName = serviceName;
 	}
-
-//	public List<ServiceProviderEntity> getServiceProviderList() {
-//		return serviceProviderList;
-//	}
-//
-//	public void setServiceProviderList(List<ServiceProviderEntity> serviceProviderList) {
-//		this.serviceProviderList = serviceProviderList;
-//	}
 
 	@Override
 	public String toString() {

@@ -11,8 +11,13 @@ import com.au.models.ServiceProviderEntity;
 
 @Repository
 public interface ServiceProviderRepository extends JpaRepository<ServiceProviderEntity, Long> {
-	
+
 	List<ServiceProviderEntity> findByforeignProviderId(ProviderEntity providerId);
-	
-	ServiceProviderEntity findByforeignProviderIdAndForeignServiceId(ProviderEntity providerId,ServiceEntity serviceId);
+
+	List<ServiceProviderEntity> findByforeignServiceId(ServiceEntity serviceId);
+
+	ServiceProviderEntity findBySpId(String spId);
+
+	ServiceProviderEntity findByforeignProviderIdAndForeignServiceId(ProviderEntity providerId,
+			ServiceEntity serviceId);
 }

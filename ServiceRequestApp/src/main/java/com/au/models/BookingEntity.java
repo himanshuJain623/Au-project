@@ -23,18 +23,10 @@ public class BookingEntity {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long bookingId;
 
-//	@ManyToOne
-//	@JoinColumn(name = "serviceId", referencedColumnName = "serviceId")
-//	private ServiceEntity serviceId;
-
-//	@ManyToOne
-//	@JoinColumn(name = "providerId", referencedColumnName = "providerId")
-//	private ProviderEntity providerId;
-
 	@ManyToOne
 	@JoinColumn(name = "fspId", referencedColumnName = "spId")
 	private ServiceProviderEntity spId;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "customerId", referencedColumnName = "customerId")
 	private CustomerEntity customerId;
@@ -56,8 +48,8 @@ public class BookingEntity {
 		// TODO Auto-generated constructor stub
 	}
 
-	public BookingEntity(Long bookingId, CustomerEntity customerId,
-			String bookingStatus, Date bookingDate, long bookingCost) {
+	public BookingEntity(Long bookingId, CustomerEntity customerId, String bookingStatus, Date bookingDate,
+			long bookingCost) {
 		super();
 		this.bookingId = bookingId;
 		this.customerId = customerId;
@@ -73,7 +65,7 @@ public class BookingEntity {
 	public void setBookingId(Long bookingId) {
 		this.bookingId = bookingId;
 	}
-	
+
 	public ServiceProviderEntity getSpId() {
 		return spId;
 	}
@@ -102,8 +94,10 @@ public class BookingEntity {
 		return bookingDate;
 	}
 
-	public void setBookingDate(java.sql.Date bookingDate) {
-		this.bookingDate = bookingDate;
+	public void setBookingDate() {
+		long millis = System.currentTimeMillis();
+		java.sql.Date date = new java.sql.Date(millis);
+		this.bookingDate = date;
 	}
 
 	public long getBookingCost() {

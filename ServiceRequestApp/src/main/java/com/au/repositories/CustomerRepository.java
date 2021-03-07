@@ -20,6 +20,12 @@ public interface CustomerRepository extends JpaRepository<CustomerEntity, Long> 
 	void updateByCustomerId(Long customerId, String customerName, String password, String customerPhone,
 			String customerLocation);
 
-	List<CustomerEntity> findByCustomerId(long id);
+	CustomerEntity findByCustomerId(long id);
+
+	@Query(value = "select exists(select * from customer_details c where c.customer_email= :userEmail and c.password = :password)", nativeQuery = true)
+	long findIfUser(String userEmail, String password);
+
+	@Query(value = "select c.customer_id from customer_details c where c.customer_email= :userEmail and c.password = :password", nativeQuery = true)
+	long findUserId(String userEmail, String password);
 
 }

@@ -53,20 +53,19 @@ public class ProviderEntityService {
 	// for adding service by provider
 	public ServiceProviderEntity addServiceByProvider(ServiceProviderEntityModel serviceToAdd) {
 
-		ServiceProviderEntity serviceToBeAdded;
-
-		ServiceEntity s = serviceRepository.findByServiceId(serviceToAdd.getServiceId());
-		ProviderEntity p = providerRepository.findByProviderId(serviceToAdd.getProviderId());
-
-		serviceToBeAdded = new ServiceProviderEntity(s, p, serviceToAdd.getServiceDescription(),
-				serviceToAdd.getDiscount(), serviceToAdd.getPrice());
-
 		try {
+			ServiceProviderEntity serviceToBeAdded;
+
+			ServiceEntity s = serviceRepository.findByServiceId(serviceToAdd.getServiceId());
+			ProviderEntity p = providerRepository.findByProviderId(serviceToAdd.getProviderId());
+
+			serviceToBeAdded = new ServiceProviderEntity(s, p, serviceToAdd.getServiceDescription(),
+					serviceToAdd.getDiscount(), serviceToAdd.getPrice());
 			ServiceProviderEntity addedService = serviceProviderRespository.save(serviceToBeAdded);
 			return addedService;
 		} catch (Exception e) {
 			System.out.println(
-					"------------------------------EXCEPTION IN GEETING ALL SERVICES BY PROVIDER---------------------------------");
+					"------------------------------EXCEPTION IN ADDING SERVICE BY PROVIDER---------------------------------");
 			e.printStackTrace();
 			System.out.println("-------------------------------------------------------------");
 			return null;
@@ -142,16 +141,20 @@ public class ProviderEntityService {
 	}
 
 //	to update booking status by provider
-	public String updateBookingSatus(Long bookingId, String status) {
+	public int updateBookingSatus(Long bookingId, String status) {
 		try {
-			String updatedStatus = bookingRepository.updateBookingStatus(bookingId, status);
-			return updatedStatus;
+			BookingEntity b = bookingRepository.findByBookingId(bookingId);
+			if (b.getBookingStatus().equals("Completed")) {
+				return 0;
+			}
+			bookingRepository.updateBookingStatus(bookingId, status);
+			return 1;
 		} catch (Exception e) {
 			System.out.println(
 					"------------------------------EXCEPTION IN UPDATING STATUS IN PROVIDER_ENTITY_SERVICE---------------------------------");
 			e.printStackTrace();
 			System.out.println("-------------------------------------------------------------");
-			return null;
+			return -1;
 		}
 	}
 }

@@ -35,7 +35,7 @@ public class CustomerEntity {
 	private String password;
 
 	@NotBlank
-	@Column(name = "customer_email", unique = true) // allowing duplication issue here
+	@Column(name = "customer_email", unique = true)
 	private String customerEmail;
 
 	@NotBlank

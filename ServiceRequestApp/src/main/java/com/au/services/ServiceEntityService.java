@@ -19,16 +19,16 @@ public class ServiceEntityService {
 		try {
 			List<ServiceEntity> serviceList = serviceRepository.findAll();
 			return serviceList;
-		}catch(Exception e) {
+		} catch (Exception e) {
 			return null;
 		}
 	}
-	
+
 	public ServiceEntity addService(ServiceEntity serviceToAdd) {
 		try {
-			ServiceEntity addedService=serviceRepository.save(serviceToAdd);
+			ServiceEntity addedService = serviceRepository.save(serviceToAdd);
 			return addedService;
-		}catch(Exception e) {
+		} catch (Exception e) {
 			System.out.println("------------------------------------------");
 			e.printStackTrace();
 			System.out.println("-------------------------------------------");

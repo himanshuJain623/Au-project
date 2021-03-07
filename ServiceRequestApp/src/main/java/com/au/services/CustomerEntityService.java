@@ -43,8 +43,19 @@ public class CustomerEntityService {
 	@Autowired
 	RatingRepository ratingRepository;
 
-	public void saveCustomer(CustomerEntity user) {
-		customerRepository.save(user);
+	public CustomerEntity saveCustomer(CustomerEntity user) {
+
+		try {
+			CustomerEntity created_user = customerRepository.save(user);
+			System.out.println(created_user.getCustomerLocation());
+			return created_user;
+		} catch (Exception e) {
+			System.out.println(
+					"------------------------------EXCEPTION IN SAVE CUSTOMER IN CUSTOMER_ENTITY_SERVICE---------------------------------");
+			e.printStackTrace();
+			System.out.println("-------------------------------------------------------------");
+			return null;
+		}
 	}
 
 	public void updateCustomer(CustomerEntity user) {
@@ -55,58 +66,82 @@ public class CustomerEntityService {
 
 	public List<CustomerBookingsEntity> getAllBookings(long user) {
 
-		List<BookingEntity> bookingData = bookingRepository.findByBookingId(user);
+		try {
 
-		List<CustomerBookingsEntity> bookingByCustomer = new ArrayList<CustomerBookingsEntity>();
+			CustomerEntity c = customerRepository.findByCustomerId(user);
 
-		for (BookingEntity bE : bookingData) {
-			CustomerBookingsEntity cBE = new CustomerBookingsEntity();
+			List<BookingEntity> bookingData = bookingRepository.findByCustomerId(c);
 
-			/*
-			 * System.out.println(bE.getProviderId().getProviderName());
-			 * System.out.println(bE.getServiceId().getServiceName());
-			 */
-			
-			// this needs to be added
-			
-//			cBE.setProviderName(bE.getProviderId().getProviderName());
-//			cBE.setServiceName(bE.getServiceId().getServiceName());
-			cBE.setBookingCost(bE.getBookingCost());
-			cBE.setBookingDate(bE.getBookingDate());
-			cBE.setBookingStatus(bE.getBookingStatus());
+			List<CustomerBookingsEntity> bookingByCustomer = new ArrayList<CustomerBookingsEntity>();
 
-			bookingByCustomer.add(cBE);
+			for (BookingEntity bE : bookingData) {
+				CustomerBookingsEntity cBE = new CustomerBookingsEntity();
+
+				cBE.setProviderName(bE.getSpId().getForeignProviderId().getProviderName());
+				cBE.setServiceName(bE.getSpId().getForeignServiceId().getServiceName());
+				cBE.setBookingCost(bE.getBookingCost());
+				cBE.setBookingDate(bE.getBookingDate());
+				cBE.setBookingStatus(bE.getBookingStatus());
+
+				bookingByCustomer.add(cBE);
+			}
+
+			return bookingByCustomer;
+
+		} catch (Exception e) {
+			System.out.println(
+					"------------------------------EXCEPTION IN GEETING ALL SERVICES BY PROVIDER---------------------------------");
+			e.printStackTrace();
+			System.out.println("-------------------------------------------------------------");
+			return null;
 		}
 
-		return bookingByCustomer;
 	}
 
 	// When a customer books a service we create a copy of it in the rating table by
 	// booking_id
 
-	public void rateService(RatingEntityModel ratingOfService) {
+	public RatingEntity rateService(RatingEntityModel ratingOfService) {
 
-		BookingEntity b = bookingRepository.findByBookingId(ratingOfService.getBookingId()).get(0);
-
-		RatingEntity r = new RatingEntity();
-
-		r.setBookingId(b);
-		r.setRatingDescription(ratingOfService.getRatingDescription());
-		r.setRatingPoints(ratingOfService.getRatingPoints());
-
-		ratingRepository.save(r);
-	}
-	
-	// to get customer name from customer id
-	// not required
-	public String getCustomerName(long customerId) {
 		try {
-			CustomerEntity customer=customerRepository.findByCustomerId(customerId).get(0);
-			return customer.getCustomerName();			
-		}catch(Exception e) {
-			System.out.println("------------------EXCEPTION IN GETTING CUSTOMER NAME-----------------------");
+
+			BookingEntity b = bookingRepository.findByBookingId(ratingOfService.getBookingId());
+			if (b.getBookingStatus().equals("Completed")) {
+				System.out.println("inside here");
+				System.out.println(b.getBookingStatus());
+				RatingEntity r = new RatingEntity();
+
+				r.setBookingId(b);
+				r.setRatingDescription(ratingOfService.getRatingDescription());
+				r.setRatingPoints(ratingOfService.getRatingPoints());
+
+				r = ratingRepository.save(r);
+				return r;
+			}else {
+				return null;
+			}
+		} catch (Exception e) {
+			System.out.println(
+					"------------------------------EXCEPTION IN RATING SERVICE IN CUSTOMER_ENTITY_SERVICE---------------------------------");
 			e.printStackTrace();
-			System.out.println("--------------------------------------------------");
+			System.out.println("-------------------------------------------------------------");
+			return null;
+		}
+
+	}
+
+	public List<ServiceProviderEntity> serviceProviders(long serviceId) {
+		try {
+			ServiceEntity s = serviceRepository.findByServiceId(serviceId);
+
+			List<ServiceProviderEntity> providersOfService = serviceProviderRepository.findByforeignServiceId(s);
+
+			return providersOfService;
+		} catch (Exception e) {
+			System.out.println(
+					"------------------------------EXCEPTION IN GETIING SERVICE PROVIDERS IN CUSTOMER_ENTITY_SERVICE---------------------------------");
+			e.printStackTrace();
+			System.out.println("-------------------------------------------------------------");
 			return null;
 		}
 	}

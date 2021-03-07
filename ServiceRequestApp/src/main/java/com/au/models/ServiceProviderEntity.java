@@ -54,7 +54,7 @@ public class ServiceProviderEntity {
 			@NotBlank @Range(min = 1, max = 100) @NotBlank @Range(min = 1, max = 100) int discount,
 			@NotBlank @NotBlank int price) {
 		super();
-		this.spId = serviceId.getServiceId()+"_"+providerId.getProviderId();
+		this.spId = serviceId.getServiceId() + "_" + providerId.getProviderId();
 		this.foreignServiceId = serviceId;
 		this.foreignProviderId = providerId;
 		this.serviceDescription = serviceDescription;
@@ -62,28 +62,28 @@ public class ServiceProviderEntity {
 		this.price = price;
 	}
 
-	public String getSidId() {
+	public String getSpId() {
 		return spId;
 	}
 
-	public void setSidId(String spId) {
+	public void setSpId(String spId) {
 		this.spId = spId;
 	}
 
-	public ServiceEntity getServiceId() {
+	public ServiceEntity getForeignServiceId() {
 		return foreignServiceId;
 	}
 
-	public void setServiceId(ServiceEntity serviceId) {
-		this.foreignServiceId = serviceId;
+	public void setForeignServiceId(ServiceEntity foreignServiceId) {
+		this.foreignServiceId = foreignServiceId;
 	}
 
-	public ProviderEntity getProviderId() {
+	public ProviderEntity getForeignProviderId() {
 		return foreignProviderId;
 	}
 
-	public void setProviderId(ProviderEntity providerId) {
-		this.foreignProviderId = providerId;
+	public void setForeignProviderId(ProviderEntity foreignProviderId) {
+		this.foreignProviderId = foreignProviderId;
 	}
 
 	public String getServiceDescription() {

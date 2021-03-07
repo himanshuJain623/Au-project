@@ -96,5 +96,18 @@ public class CustomerEntityService {
 
 		ratingRepository.save(r);
 	}
-
+	
+	// to get customer name from customer id
+	// not required
+	public String getCustomerName(long customerId) {
+		try {
+			CustomerEntity customer=customerRepository.findByCustomerId(customerId).get(0);
+			return customer.getCustomerName();			
+		}catch(Exception e) {
+			System.out.println("------------------EXCEPTION IN GETTING CUSTOMER NAME-----------------------");
+			e.printStackTrace();
+			System.out.println("--------------------------------------------------");
+			return null;
+		}
+	}
 }

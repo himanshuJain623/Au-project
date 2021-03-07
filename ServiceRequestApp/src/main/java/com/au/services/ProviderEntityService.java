@@ -17,6 +17,7 @@ import com.au.models.ProviderEntity;
 import com.au.models.ServiceEntity;
 import com.au.models.ServiceProviderEntity;
 import com.au.models.ServiceProviderEntityModel;
+import com.au.repositories.BookingRepository;
 import com.au.repositories.ProviderRepository;
 import com.au.repositories.ServiceProviderRepository;
 import com.au.repositories.ServiceRepository;
@@ -34,8 +35,11 @@ public class ProviderEntityService {
 	ServiceRepository serviceRepository;
 
 	@Autowired
+	BookingRepository bookingRepository;
+
+	@Autowired
 	BookingEntityService bookingEntityService;
-	
+
 	// for signing up provider
 	public ProviderEntity saveProvider(ProviderEntity user) {
 		try {
@@ -58,8 +62,8 @@ public class ProviderEntityService {
 				serviceToAdd.getDiscount(), serviceToAdd.getPrice());
 
 		try {
-			serviceProviderRespository.save(serviceToBeAdded);
-			return serviceToBeAdded;
+			ServiceProviderEntity addedService = serviceProviderRespository.save(serviceToBeAdded);
+			return addedService;
 		} catch (Exception e) {
 			System.out.println(
 					"------------------------------EXCEPTION IN GEETING ALL SERVICES BY PROVIDER---------------------------------");
@@ -102,36 +106,52 @@ public class ProviderEntityService {
 			return null;
 		}
 	}
-	
-	public List<ProviderBookingsModel> getproviderBookings(Long providerId){
-		List<BookingEntity> providerBookingEntities=bookingEntityService.getProviderBookings(providerId);
-		List<ProviderBookingsModel> providerBookings=new ArrayList<>();
-		for(BookingEntity bE:providerBookingEntities) {
-			ProviderBookingsModel booking=new ProviderBookingsModel();
-			
-			booking.setBookingId(bE.getBookingId());
-			booking.setBookingStatus(bE.getBookingStatus());
-			booking.setBookingDate(bE.getBookingDate());
-			booking.setBookingCost(bE.getBookingCost());
-			
-			//doing
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
+
+	// for getting all bookings of a provider
+	public List<ProviderBookingsModel> getproviderBookings(Long providerId) {
+		try {
+			List<ServiceProviderEntity> speList = getServiceByProvider(providerId);
+			List<ProviderBookingsModel> providerBookings = new ArrayList<>();
+			for (ServiceProviderEntity spId : speList) {
+
+				List<BookingEntity> providerBookingEntities = bookingEntityService.getServiceProviderBookings(spId);
+
+				for (BookingEntity bE : providerBookingEntities) {
+					ProviderBookingsModel booking = new ProviderBookingsModel();
+
+					booking.setBookingId(bE.getBookingId());
+					booking.setBookingStatus(bE.getBookingStatus());
+					booking.setBookingDate(bE.getBookingDate());
+					booking.setBookingCost(bE.getBookingCost());
+					booking.setCustomerName(bE.getCustomerId().getCustomerName());
+					booking.setServiceName(bE.getSpId().getForeignServiceId().getServiceName());
+					booking.setProviderName(bE.getSpId().getForeignProviderId().getProviderName());
+
+					providerBookings.add(booking);
+
+				}
+			}
+			return providerBookings;
+		} catch (Exception e) {
+			System.out.println(
+					"------------------------------EXCEPTION IN GETTING BOOKING DETAILS PROVIDED BY PROVIDER IN PROVIDER_ENTITY_SERVICE---------------------------------");
+			e.printStackTrace();
+			System.out.println("-------------------------------------------------------------");
+			return null;
 		}
-		return providerBookings;
+	}
+
+//	to update booking status by provider
+	public String updateBookingSatus(Long bookingId, String status) {
+		try {
+			String updatedStatus = bookingRepository.updateBookingStatus(bookingId, status);
+			return updatedStatus;
+		} catch (Exception e) {
+			System.out.println(
+					"------------------------------EXCEPTION IN UPDATING STATUS IN PROVIDER_ENTITY_SERVICE---------------------------------");
+			e.printStackTrace();
+			System.out.println("-------------------------------------------------------------");
+			return null;
+		}
 	}
 }

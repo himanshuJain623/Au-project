@@ -16,14 +16,13 @@ public class BookingEntityService {
 	@Autowired
 	BookingRepository bookingRepository;
 
-	public List<BookingEntity> getProviderBookings(Long providerId) {
-		String pId="_"+providerId;
+	public List<BookingEntity> getServiceProviderBookings(ServiceProviderEntity spId) {
 		try {
-			List<BookingEntity> providerBookings = bookingRepository.findByFspIdEndingWith(pId);
+			List<BookingEntity> providerBookings = bookingRepository.findBySpId(spId);
 			return providerBookings;
 		} catch (Exception e) {
 			System.out.println(
-					"------------------------------EXCEPTION IN GEETING ALL BOOKINGS BY PROVIDER---------------------------------");
+					"------------------------------EXCEPTION IN GETTING ALL BOOKINGS BY PROVIDER IN BOOKING_ENTITY_SERVICE---------------------------------");
 			e.printStackTrace();
 			System.out.println("-------------------------------------------------------------");
 			return null;

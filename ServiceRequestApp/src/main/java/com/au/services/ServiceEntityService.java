@@ -16,15 +16,23 @@ public class ServiceEntityService {
 	ServiceRepository serviceRepository;
 
 	public List<ServiceEntity> getAllServices() {
-		List<ServiceEntity> serviceList = serviceRepository.findAll();
-		if (serviceList.size() > 0) {
+		try {
+			List<ServiceEntity> serviceList = serviceRepository.findAll();
 			return serviceList;
-		} else {
-			return new ArrayList<ServiceEntity>();
+		}catch(Exception e) {
+			return null;
 		}
 	}
 	
-	public void addService(ServiceEntity serviceToAdd) {
-		serviceRepository.save(serviceToAdd);
+	public ServiceEntity addService(ServiceEntity serviceToAdd) {
+		try {
+			ServiceEntity addedService=serviceRepository.save(serviceToAdd);
+			return addedService;
+		}catch(Exception e) {
+			System.out.println("------------------------------------------");
+			e.printStackTrace();
+			System.out.println("-------------------------------------------");
+			return null;
+		}
 	}
 }

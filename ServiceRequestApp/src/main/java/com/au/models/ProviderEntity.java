@@ -48,8 +48,8 @@ public class ProviderEntity {
 	@Column(name = "provider_location")
 	private String providerLocation;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "providerId", cascade = CascadeType.ALL)
-    private List<ServiceProviderEntity>  serviceProviderList = new ArrayList<>();
+//	@OneToMany(mappedBy = "foreignProviderId")
+//    private List<ServiceProviderEntity>  serviceProviderList = new ArrayList<>();
 	
 	public ProviderEntity() {
 		super();
@@ -117,12 +117,12 @@ public class ProviderEntity {
 		this.providerLocation = providerLocation;
 	}
 
-	public List<ServiceProviderEntity> getServiceProviderList() {
-		return serviceProviderList;
-	}
-
-	public void setServiceProviderList(List<ServiceProviderEntity> serviceProviderList) {
-		this.serviceProviderList = serviceProviderList;
-	}
+//	public List<ServiceProviderEntity> getServiceProviderList() {
+//		return serviceProviderList;
+//	}
+//
+//	public void setServiceProviderList(List<ServiceProviderEntity> serviceProviderList) {
+//		this.serviceProviderList = serviceProviderList;
+//	}
 
 }

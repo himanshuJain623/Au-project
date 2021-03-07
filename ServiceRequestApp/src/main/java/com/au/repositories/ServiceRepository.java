@@ -13,10 +13,9 @@ import com.au.models.ServiceEntity;
 public interface ServiceRepository extends JpaRepository<ServiceEntity, Long> {
 	ServiceEntity findByServiceName(String serviceName);
 
-	@Query(value = "SELECT * FROM SERVICE_DETAILS s where s.serviceId = :id", nativeQuery = true)
-	List<ServiceEntity> findServiceById(@Param("id") Long id);
+//	@Query(value = "SELECT * FROM SERVICE_DETAILS s where s.serviceId = :id", nativeQuery = true)
+//	List<ServiceEntity> findServiceById(@Param("id") Long id);
 
-//	ServiceEntity findByServiceId(ong id);
 
 	ServiceEntity findByServiceId(Long serviceId);
 }

@@ -19,16 +19,15 @@ import org.springframework.format.annotation.NumberFormat;
 public class ServiceProviderEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long sidId;
+	private String sidId;
 
 	@ManyToOne
-	@JoinColumn(name = "serviceId", referencedColumnName = "serviceId")
-	private ServiceEntity serviceId;
+	@JoinColumn(name = "foreignServiceId", referencedColumnName = "serviceId")
+	private ServiceEntity foreignServiceId;
 
 	@ManyToOne
-	@JoinColumn(name = "providerId", referencedColumnName = "providerId")
-	private ProviderEntity providerId;
+	@JoinColumn(name = "foreignProviderId", referencedColumnName = "providerId")
+	private ProviderEntity foreignProviderId;
 
 	@NotBlank
 	@Column(name = "service_description")
@@ -50,41 +49,41 @@ public class ServiceProviderEntity {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ServiceProviderEntity(Long sidId, ServiceEntity serviceId, ProviderEntity providerId,
+	public ServiceProviderEntity(ServiceEntity serviceId, ProviderEntity providerId,
 			@NotBlank String serviceDescription,
 			@NotBlank @Range(min = 1, max = 100) @NotBlank @Range(min = 1, max = 100) int discount,
 			@NotBlank @NotBlank int price) {
 		super();
-		this.sidId = sidId;
-		this.serviceId = serviceId;
-		this.providerId = providerId;
+		this.sidId = serviceId.getServiceId()+"_"+providerId.getProviderId();
+		this.foreignServiceId = serviceId;
+		this.foreignProviderId = providerId;
 		this.serviceDescription = serviceDescription;
 		this.discount = discount;
 		this.price = price;
 	}
 
-	public Long getSidId() {
+	public String getSidId() {
 		return sidId;
 	}
 
-	public void setSidId(Long sidId) {
+	public void setSidId(String sidId) {
 		this.sidId = sidId;
 	}
 
 	public ServiceEntity getServiceId() {
-		return serviceId;
+		return foreignServiceId;
 	}
 
 	public void setServiceId(ServiceEntity serviceId) {
-		this.serviceId = serviceId;
+		this.foreignServiceId = serviceId;
 	}
 
 	public ProviderEntity getProviderId() {
-		return providerId;
+		return foreignProviderId;
 	}
 
 	public void setProviderId(ProviderEntity providerId) {
-		this.providerId = providerId;
+		this.foreignProviderId = providerId;
 	}
 
 	public String getServiceDescription() {

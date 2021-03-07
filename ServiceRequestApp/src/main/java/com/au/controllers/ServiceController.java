@@ -33,12 +33,19 @@ public class ServiceController {
 	@RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<List<ServiceEntity>> getAllServices() {
 		List<ServiceEntity> list = service.getAllServices();
+		if(list==null) {
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		}
 		return new ResponseEntity<List<ServiceEntity>>(list, new HttpHeaders(), HttpStatus.OK);
 	}
 	
 	@PostMapping("/addService")
-	public void addService(@RequestBody ServiceEntity serviceToAdd) {
-		service.addService(serviceToAdd);
+	public ResponseEntity addService(@RequestBody ServiceEntity serviceToAdd) {
+		ServiceEntity addedService=service.addService(serviceToAdd);
+		if(addedService==null) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+		}
+		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 
 }

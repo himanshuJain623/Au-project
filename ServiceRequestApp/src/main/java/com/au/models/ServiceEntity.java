@@ -30,8 +30,8 @@ public class ServiceEntity {
 	@Column(name = "service_name", unique = true)
 	private String serviceName;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "serviceId", cascade = CascadeType.ALL)
-	private List<ServiceProviderEntity> serviceProviderList = new ArrayList<>();
+//	@OneToMany(mappedBy = "foreignServiceId")
+//	private List<ServiceProviderEntity> serviceProviderList = new ArrayList<>();
 
 	public ServiceEntity() {
 		super();
@@ -60,13 +60,13 @@ public class ServiceEntity {
 		this.serviceName = serviceName;
 	}
 
-	public List<ServiceProviderEntity> getServiceProviderList() {
-		return serviceProviderList;
-	}
-
-	public void setServiceProviderList(List<ServiceProviderEntity> serviceProviderList) {
-		this.serviceProviderList = serviceProviderList;
-	}
+//	public List<ServiceProviderEntity> getServiceProviderList() {
+//		return serviceProviderList;
+//	}
+//
+//	public void setServiceProviderList(List<ServiceProviderEntity> serviceProviderList) {
+//		this.serviceProviderList = serviceProviderList;
+//	}
 
 	@Override
 	public String toString() {

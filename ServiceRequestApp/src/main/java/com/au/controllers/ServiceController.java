@@ -34,6 +34,8 @@ public class ServiceController {
 	public ResponseEntity<List<ServiceEntity>> getAllServices() {
 		List<ServiceEntity> list = service.getAllServices();
 		if(list==null) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}else if(list.size()==0) {
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 		}
 		return new ResponseEntity<List<ServiceEntity>>(list, new HttpHeaders(), HttpStatus.OK);

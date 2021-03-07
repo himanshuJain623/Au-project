@@ -1,5 +1,6 @@
 package com.au.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -10,6 +11,8 @@ import org.hibernate.validator.constraints.Range;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.au.models.BookingEntity;
+import com.au.models.ProviderBookingsModel;
 import com.au.models.ProviderEntity;
 import com.au.models.ServiceEntity;
 import com.au.models.ServiceProviderEntity;
@@ -30,6 +33,9 @@ public class ProviderEntityService {
 	@Autowired
 	ServiceRepository serviceRepository;
 
+	@Autowired
+	BookingEntityService bookingEntityService;
+	
 	// for signing up provider
 	public ProviderEntity saveProvider(ProviderEntity user) {
 		try {
@@ -79,7 +85,7 @@ public class ProviderEntityService {
 		}
 	}
 
-	// for getting service details provided by provider
+	// for getting single service details provided by provider
 	public ServiceProviderEntity getServiceDetails(Long providerId, Long serviceId) {
 
 		try {
@@ -96,5 +102,36 @@ public class ProviderEntityService {
 			return null;
 		}
 	}
-
+	
+	public List<ProviderBookingsModel> getproviderBookings(Long providerId){
+		List<BookingEntity> providerBookingEntities=bookingEntityService.getProviderBookings(providerId);
+		List<ProviderBookingsModel> providerBookings=new ArrayList<>();
+		for(BookingEntity bE:providerBookingEntities) {
+			ProviderBookingsModel booking=new ProviderBookingsModel();
+			
+			booking.setBookingId(bE.getBookingId());
+			booking.setBookingStatus(bE.getBookingStatus());
+			booking.setBookingDate(bE.getBookingDate());
+			booking.setBookingCost(bE.getBookingCost());
+			
+			//doing
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		}
+		return providerBookings;
+	}
 }

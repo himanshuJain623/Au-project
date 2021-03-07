@@ -66,9 +66,11 @@ public class CustomerEntityService {
 			 * System.out.println(bE.getProviderId().getProviderName());
 			 * System.out.println(bE.getServiceId().getServiceName());
 			 */
-
-			cBE.setProviderName(bE.getProviderId().getProviderName());
-			cBE.setServiceName(bE.getServiceId().getServiceName());
+			
+			// this needs to be added
+			
+//			cBE.setProviderName(bE.getProviderId().getProviderName());
+//			cBE.setServiceName(bE.getServiceId().getServiceName());
 			cBE.setBookingCost(bE.getBookingCost());
 			cBE.setBookingDate(bE.getBookingDate());
 			cBE.setBookingStatus(bE.getBookingStatus());

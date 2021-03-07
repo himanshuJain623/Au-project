@@ -1,5 +1,6 @@
 package com.au.controllers;
 
+import com.au.models.BookingEntity;
 import com.au.models.ProviderEntity;
 import com.au.models.ServiceProviderEntity;
 import com.au.models.ServiceProviderEntityModel;
@@ -73,6 +74,18 @@ public class ProviderController {
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 		}
 		return new ResponseEntity<ServiceProviderEntity>(service, HttpStatus.OK);
+	}
+	
+	@GetMapping("/bookings/all")
+	public ResponseEntity<List<BookingEntity>> getProviderBookings(@RequestParam Long providerId){
+		// doing
+		List<BookingEntity> providerBookings=provider.getproviderBookings(providerId);
+		if(providerBookings==null) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}else if(providerBookings.size()==0) {
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		}
+		return new ResponseEntity<List<BookingEntity>>(providerBookings, HttpStatus.OK);
 	}
 
 }

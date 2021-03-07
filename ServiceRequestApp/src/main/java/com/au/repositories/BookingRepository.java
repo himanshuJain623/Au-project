@@ -15,4 +15,6 @@ public interface BookingRepository extends JpaRepository<BookingEntity, Long> {
 	@Query(value = "SELECT * FROM Bookings_details b where b.customer_id = :id", nativeQuery = true)
 	List<BookingEntity> findByBookingId(long id);
 
+	
+	List<BookingEntity> findByFspIdEndingWith(String pId);
 }

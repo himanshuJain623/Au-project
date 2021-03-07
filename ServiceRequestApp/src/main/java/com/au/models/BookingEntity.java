@@ -23,14 +23,18 @@ public class BookingEntity {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long bookingId;
 
-	@ManyToOne
-	@JoinColumn(name = "serviceId", referencedColumnName = "serviceId")
-	private ServiceEntity serviceId;
+//	@ManyToOne
+//	@JoinColumn(name = "serviceId", referencedColumnName = "serviceId")
+//	private ServiceEntity serviceId;
+
+//	@ManyToOne
+//	@JoinColumn(name = "providerId", referencedColumnName = "providerId")
+//	private ProviderEntity providerId;
 
 	@ManyToOne
-	@JoinColumn(name = "providerId", referencedColumnName = "providerId")
-	private ProviderEntity providerId;
-
+	@JoinColumn(name = "fspId", referencedColumnName = "spId")
+	private ServiceProviderEntity spId;
+	
 	@ManyToOne
 	@JoinColumn(name = "customerId", referencedColumnName = "customerId")
 	private CustomerEntity customerId;
@@ -52,12 +56,10 @@ public class BookingEntity {
 		// TODO Auto-generated constructor stub
 	}
 
-	public BookingEntity(Long bookingId, ServiceEntity serviceId, ProviderEntity providerId, CustomerEntity customerId,
+	public BookingEntity(Long bookingId, CustomerEntity customerId,
 			String bookingStatus, Date bookingDate, long bookingCost) {
 		super();
 		this.bookingId = bookingId;
-		this.serviceId = serviceId;
-		this.providerId = providerId;
 		this.customerId = customerId;
 		this.bookingStatus = bookingStatus;
 		this.bookingDate = bookingDate;
@@ -71,21 +73,13 @@ public class BookingEntity {
 	public void setBookingId(Long bookingId) {
 		this.bookingId = bookingId;
 	}
-
-	public ServiceEntity getServiceId() {
-		return serviceId;
+	
+	public ServiceProviderEntity getSpId() {
+		return spId;
 	}
 
-	public void setServiceId(ServiceEntity serviceId) {
-		this.serviceId = serviceId;
-	}
-
-	public ProviderEntity getProviderId() {
-		return providerId;
-	}
-
-	public void setProviderId(ProviderEntity providerId) {
-		this.providerId = providerId;
+	public void setSpId(ServiceProviderEntity spId) {
+		this.spId = spId;
 	}
 
 	public CustomerEntity getCustomerId() {

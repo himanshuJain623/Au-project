@@ -19,7 +19,7 @@ import org.springframework.format.annotation.NumberFormat;
 public class ServiceProviderEntity {
 
 	@Id
-	private String sidId;
+	private String spId;
 
 	@ManyToOne
 	@JoinColumn(name = "foreignServiceId", referencedColumnName = "serviceId")
@@ -54,7 +54,7 @@ public class ServiceProviderEntity {
 			@NotBlank @Range(min = 1, max = 100) @NotBlank @Range(min = 1, max = 100) int discount,
 			@NotBlank @NotBlank int price) {
 		super();
-		this.sidId = serviceId.getServiceId()+"_"+providerId.getProviderId();
+		this.spId = serviceId.getServiceId()+"_"+providerId.getProviderId();
 		this.foreignServiceId = serviceId;
 		this.foreignProviderId = providerId;
 		this.serviceDescription = serviceDescription;
@@ -63,11 +63,11 @@ public class ServiceProviderEntity {
 	}
 
 	public String getSidId() {
-		return sidId;
+		return spId;
 	}
 
-	public void setSidId(String sidId) {
-		this.sidId = sidId;
+	public void setSidId(String spId) {
+		this.spId = spId;
 	}
 
 	public ServiceEntity getServiceId() {

@@ -16,6 +16,9 @@
 	<description>Au project using Spring Boot of Service Request</description>
 	<properties>
 		<java.version>11</java.version>
+		<sonar.projectKey>himanshuJain623_Au-project</sonar.projectKey>
+		<sonar.organization>au-team-10</sonar.organization>
+		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
 	<dependencies>
 		<dependency>

@@ -1,8 +1,9 @@
 package com.au.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,23 +16,29 @@ public class ServiceEntityService {
 	@Autowired
 	ServiceRepository serviceRepository;
 
+	private static final Logger logger = LoggerFactory.getLogger(ServiceEntityService.class);
+
 	public List<ServiceEntity> getAllServices() {
 		try {
-			List<ServiceEntity> serviceList = serviceRepository.findAll();
-			return serviceList;
+			return serviceRepository.findAll();
 		} catch (Exception e) {
+			logger.debug(
+					"------------------------------EXCEPTION IN GEETING SERVICES IN SERVICE_ENTITY_SERVICE---------------------------------");
+			e.printStackTrace();
+			logger.debug("-----------------------------END--------------------------------");
 			return null;
+
 		}
 	}
 
 	public ServiceEntity addService(ServiceEntity serviceToAdd) {
 		try {
-			ServiceEntity addedService = serviceRepository.save(serviceToAdd);
-			return addedService;
+			return serviceRepository.save(serviceToAdd);
 		} catch (Exception e) {
-			System.out.println("------------------------------------------");
+			logger.debug(
+					"------------------EXCEPTION IN ADDING SERVICE IN SERVICE_ENTITY_SERVICE------------------------");
 			e.printStackTrace();
-			System.out.println("-------------------------------------------");
+			logger.debug("-----------------END--------------------------");
 			return null;
 		}
 	}

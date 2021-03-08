@@ -12,7 +12,6 @@ public class CustomerBookingsEntity {
 
 	public CustomerBookingsEntity() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public CustomerBookingsEntity(String providerName, String serviceName, String bookingStatus, Date bookingDate,

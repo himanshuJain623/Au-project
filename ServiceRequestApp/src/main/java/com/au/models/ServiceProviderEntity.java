@@ -2,8 +2,6 @@ package com.au.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -46,7 +44,6 @@ public class ServiceProviderEntity {
 
 	public ServiceProviderEntity() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public ServiceProviderEntity(ServiceEntity serviceId, ProviderEntity providerId,

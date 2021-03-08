@@ -13,7 +13,6 @@ public class ProviderBookingsModel {
 
 	public ProviderBookingsModel() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public ProviderBookingsModel(Long bookingId, String providerName, String customerName, String serviceName,

@@ -7,7 +7,6 @@ public class EmailPasswordEntity {
 
 	public EmailPasswordEntity() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public EmailPasswordEntity(String userMail, String userPassword) {

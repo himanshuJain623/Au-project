@@ -1,16 +1,10 @@
 package com.au.models;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
@@ -48,7 +42,6 @@ public class ProviderEntity {
 
 	public ProviderEntity() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public ProviderEntity(Long providerId, @NotBlank String providerName, @NotBlank String password,

@@ -9,7 +9,6 @@ public class ServiceProviderEntityModel {
 
 	public ServiceProviderEntityModel() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public ServiceProviderEntityModel(Long serviceId, Long providerId, String serviceDescription, int discount,

@@ -6,7 +6,6 @@ public class BookingEntityModel {
 
 	public BookingEntityModel() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public BookingEntityModel(String spId, Long customerId) {

@@ -3,10 +3,10 @@ package com.au.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import com.au.models.BookingEntity;
 import com.au.models.CustomerBookingsEntity;
@@ -43,17 +43,18 @@ public class CustomerEntityService {
 	@Autowired
 	RatingRepository ratingRepository;
 
+	private static final Logger logger = LoggerFactory.getLogger(CustomerEntityService.class);
+
 	public CustomerEntity saveCustomer(CustomerEntity user) {
 
 		try {
-			CustomerEntity created_user = customerRepository.save(user);
-			System.out.println(created_user.getCustomerLocation());
-			return created_user;
+			return customerRepository.save(user);
+
 		} catch (Exception e) {
-			System.out.println(
+			logger.debug(
 					"------------------------------EXCEPTION IN SAVE CUSTOMER IN CUSTOMER_ENTITY_SERVICE---------------------------------");
 			e.printStackTrace();
-			System.out.println("-------------------------------------------------------------");
+			logger.debug("------------------------------END-------------------------------");
 			return null;
 		}
 	}
@@ -72,7 +73,7 @@ public class CustomerEntityService {
 
 			List<BookingEntity> bookingData = bookingRepository.findByCustomerId(c);
 
-			List<CustomerBookingsEntity> bookingByCustomer = new ArrayList<CustomerBookingsEntity>();
+			List<CustomerBookingsEntity> bookingByCustomer = new ArrayList<>();
 
 			for (BookingEntity bE : bookingData) {
 				CustomerBookingsEntity cBE = new CustomerBookingsEntity();
@@ -89,10 +90,10 @@ public class CustomerEntityService {
 			return bookingByCustomer;
 
 		} catch (Exception e) {
-			System.out.println(
+			logger.debug(
 					"------------------------------EXCEPTION IN GEETING ALL SERVICES BY PROVIDER---------------------------------");
 			e.printStackTrace();
-			System.out.println("-------------------------------------------------------------");
+			logger.debug("------------------------------END-------------------------------");
 			return null;
 		}
 
@@ -107,8 +108,6 @@ public class CustomerEntityService {
 
 			BookingEntity b = bookingRepository.findByBookingId(ratingOfService.getBookingId());
 			if (b.getBookingStatus().equals("Completed")) {
-				System.out.println("inside here");
-				System.out.println(b.getBookingStatus());
 				RatingEntity r = new RatingEntity();
 
 				r.setBookingId(b);
@@ -117,14 +116,14 @@ public class CustomerEntityService {
 
 				r = ratingRepository.save(r);
 				return r;
-			}else {
+			} else {
 				return null;
 			}
 		} catch (Exception e) {
-			System.out.println(
+			logger.debug(
 					"------------------------------EXCEPTION IN RATING SERVICE IN CUSTOMER_ENTITY_SERVICE---------------------------------");
 			e.printStackTrace();
-			System.out.println("-------------------------------------------------------------");
+			logger.debug("---------------------------END----------------------------------");
 			return null;
 		}
 
@@ -134,14 +133,13 @@ public class CustomerEntityService {
 		try {
 			ServiceEntity s = serviceRepository.findByServiceId(serviceId);
 
-			List<ServiceProviderEntity> providersOfService = serviceProviderRepository.findByforeignServiceId(s);
+			return serviceProviderRepository.findByforeignServiceId(s);
 
-			return providersOfService;
 		} catch (Exception e) {
-			System.out.println(
+			logger.debug(
 					"------------------------------EXCEPTION IN GETIING SERVICE PROVIDERS IN CUSTOMER_ENTITY_SERVICE---------------------------------");
 			e.printStackTrace();
-			System.out.println("-------------------------------------------------------------");
+			logger.debug("-------------------------------------------------------------");
 			return null;
 		}
 	}

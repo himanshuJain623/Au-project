@@ -7,11 +7,13 @@ import org.springframework.stereotype.Service;
 
 import com.au.models.BookingEntity;
 import com.au.models.BookingEntityModel;
-import com.au.models.ProviderEntity;
 import com.au.models.ServiceProviderEntity;
 import com.au.repositories.BookingRepository;
 import com.au.repositories.CustomerRepository;
 import com.au.repositories.ServiceProviderRepository;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Service
 public class BookingEntityService {
@@ -25,15 +27,16 @@ public class BookingEntityService {
 	@Autowired
 	CustomerRepository customerRepository;
 
+	private static final Logger logger = LoggerFactory.getLogger(BookingEntityService.class);
+
 	public List<BookingEntity> getServiceProviderBookings(ServiceProviderEntity spId) {
 		try {
-			List<BookingEntity> providerBookings = bookingRepository.findBySpId(spId);
-			return providerBookings;
+			return bookingRepository.findBySpId(spId);
 		} catch (Exception e) {
-			System.out.println(
+			logger.debug(
 					"------------------------------EXCEPTION IN GETTING ALL BOOKINGS BY PROVIDER IN BOOKING_ENTITY_SERVICE---------------------------------");
 			e.printStackTrace();
-			System.out.println("-------------------------------------------------------------");
+			logger.debug("-------------------------------------------------------------");
 			return null;
 		}
 	}
@@ -53,10 +56,10 @@ public class BookingEntityService {
 			b.setSpId(sPE);
 			return bookingRepository.save(b);
 		} catch (Exception e) {
-			System.out.println(
+			logger.info(
 					"------------------------------EXCEPTION IN BOOKING SERVICE IN BOOKING_ENTITY_SERVICE---------------------------------");
 			e.printStackTrace();
-			System.out.println("-------------------------------------------------------------");
+			logger.info("-------------------------------------------------------------");
 			return null;
 		}
 	}

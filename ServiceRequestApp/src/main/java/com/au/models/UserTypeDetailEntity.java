@@ -11,7 +11,6 @@ public class UserTypeDetailEntity {
 
 	public UserTypeDetailEntity() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public UserTypeDetailEntity(String userType, long userId, String userName, String userEmail, String userPhone,

@@ -1,6 +1,5 @@
 package com.au.controllers;
 
-import com.au.models.BookingEntity;
 import com.au.models.ProviderBookingsModel;
 import com.au.models.ProviderEntity;
 import com.au.models.ServiceProviderEntity;
@@ -33,20 +32,20 @@ public class ProviderController {
 
 	@PostMapping("/signup")
 	public ResponseEntity<ProviderEntity> addUser(@RequestBody ProviderEntity user) {
-		ProviderEntity created_user = provider.saveProvider(user);
-		if (created_user == null) {
+		ProviderEntity createdUser = provider.saveProvider(user);
+		if (createdUser == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
-		return new ResponseEntity<>(created_user, HttpStatus.CREATED);
+		return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
 	}
 
 	@PostMapping("/service/addService")
 	public ResponseEntity<ServiceProviderEntity> addService(@RequestBody ServiceProviderEntityModel serviceToAdd) {
-		ServiceProviderEntity service_added = provider.addServiceByProvider(serviceToAdd);
-		if (service_added == null) {
+		ServiceProviderEntity serviceAdded = provider.addServiceByProvider(serviceToAdd);
+		if (serviceAdded == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
-		return new ResponseEntity<>(service_added, HttpStatus.CREATED);
+		return new ResponseEntity<>(serviceAdded, HttpStatus.CREATED);
 	}
 
 	@GetMapping("/service/all")
@@ -54,10 +53,10 @@ public class ProviderController {
 		List<ServiceProviderEntity> servicesByProvider = provider.getServiceByProvider(providerId);
 		if (servicesByProvider == null) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		} else if (servicesByProvider.size() == 0) {
+		} else if (servicesByProvider.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 		}
-		return new ResponseEntity<List<ServiceProviderEntity>>(servicesByProvider, HttpStatus.OK);
+		return new ResponseEntity<>(servicesByProvider, HttpStatus.OK);
 	}
 
 	@GetMapping("/service/single")
@@ -67,7 +66,7 @@ public class ProviderController {
 		if (service == null) {
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 		}
-		return new ResponseEntity<ServiceProviderEntity>(service, HttpStatus.OK);
+		return new ResponseEntity<>(service, HttpStatus.OK);
 	}
 
 	@GetMapping("/bookings/all")
@@ -75,20 +74,20 @@ public class ProviderController {
 		List<ProviderBookingsModel> providerBookings = provider.getproviderBookings(providerId);
 		if (providerBookings == null) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		} else if (providerBookings.size() == 0) {
+		} else if (providerBookings.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 		}
-		return new ResponseEntity<List<ProviderBookingsModel>>(providerBookings, HttpStatus.OK);
+		return new ResponseEntity<>(providerBookings, HttpStatus.OK);
 	}
 
 	@PutMapping("/booking/updateStatus")
-	public ResponseEntity updateBookingSatus(@RequestParam Long bookingId, @RequestParam String status) {
+	public ResponseEntity<HttpStatus> updateBookingSatus(@RequestParam Long bookingId, @RequestParam String status) {
 		int updatedStatus = provider.updateBookingSatus(bookingId, status);
 		if (updatedStatus == -1) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		} else if (updatedStatus == 0) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
-		return new ResponseEntity<>(updatedStatus, HttpStatus.CREATED);
+		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 }

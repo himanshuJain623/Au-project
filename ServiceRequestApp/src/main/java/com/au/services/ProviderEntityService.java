@@ -3,11 +3,8 @@ package com.au.services;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.validation.constraints.NotBlank;
-
-import org.hibernate.validator.constraints.Range;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,11 +37,12 @@ public class ProviderEntityService {
 	@Autowired
 	BookingEntityService bookingEntityService;
 
+	private static final Logger logger = LoggerFactory.getLogger(ProviderEntityService.class);
+
 	// for signing up provider
 	public ProviderEntity saveProvider(ProviderEntity user) {
 		try {
-			ProviderEntity created_user = providerRepository.save(user);
-			return created_user;
+			return providerRepository.save(user);
 		} catch (Exception e) {
 			return null;
 		}
@@ -61,13 +59,12 @@ public class ProviderEntityService {
 
 			serviceToBeAdded = new ServiceProviderEntity(s, p, serviceToAdd.getServiceDescription(),
 					serviceToAdd.getDiscount(), serviceToAdd.getPrice());
-			ServiceProviderEntity addedService = serviceProviderRespository.save(serviceToBeAdded);
-			return addedService;
+			return serviceProviderRespository.save(serviceToBeAdded);
 		} catch (Exception e) {
-			System.out.println(
+			logger.debug(
 					"------------------------------EXCEPTION IN ADDING SERVICE BY PROVIDER---------------------------------");
 			e.printStackTrace();
-			System.out.println("-------------------------------------------------------------");
+			logger.debug("-------------------------------------------------------------");
 			return null;
 		}
 	}
@@ -77,13 +74,12 @@ public class ProviderEntityService {
 
 		try {
 			ProviderEntity p = providerRepository.findByProviderId(providerId);
-			List<ServiceProviderEntity> servicesByProvider = serviceProviderRespository.findByforeignProviderId(p);
-			return servicesByProvider;
+			return serviceProviderRespository.findByforeignProviderId(p);
 		} catch (Exception e) {
-			System.out.println(
+			logger.debug(
 					"------------------------------EXCEPTION IN GEETING ALL SERVICES BY PROVIDER---------------------------------");
 			e.printStackTrace();
-			System.out.println("-------------------------------------------------------------");
+			logger.debug("-----------------------------END--------------------------------");
 			return null;
 		}
 	}
@@ -94,14 +90,13 @@ public class ProviderEntityService {
 		try {
 			ProviderEntity p = providerRepository.findByProviderId(providerId);
 			ServiceEntity s = serviceRepository.findByServiceId(serviceId);
-			ServiceProviderEntity serviceDetails = serviceProviderRespository
-					.findByforeignProviderIdAndForeignServiceId(p, s);
-			return serviceDetails;
+			return serviceProviderRespository.findByforeignProviderIdAndForeignServiceId(p, s);
+
 		} catch (Exception e) {
-			System.out.println(
+			logger.debug(
 					"------------------------------EXCEPTION IN GEETING SERVICES DETAILS PROVIDED BY PROVIDER---------------------------------");
 			e.printStackTrace();
-			System.out.println("-------------------------------------------------------------");
+			logger.debug("-----------------------------END--------------------------------");
 			return null;
 		}
 	}
@@ -132,10 +127,10 @@ public class ProviderEntityService {
 			}
 			return providerBookings;
 		} catch (Exception e) {
-			System.out.println(
+			logger.debug(
 					"------------------------------EXCEPTION IN GETTING BOOKING DETAILS PROVIDED BY PROVIDER IN PROVIDER_ENTITY_SERVICE---------------------------------");
 			e.printStackTrace();
-			System.out.println("-------------------------------------------------------------");
+			logger.debug("----------------------------END---------------------------------");
 			return null;
 		}
 	}
@@ -150,10 +145,10 @@ public class ProviderEntityService {
 			bookingRepository.updateBookingStatus(bookingId, status);
 			return 1;
 		} catch (Exception e) {
-			System.out.println(
+			logger.debug(
 					"------------------------------EXCEPTION IN UPDATING STATUS IN PROVIDER_ENTITY_SERVICE---------------------------------");
 			e.printStackTrace();
-			System.out.println("-------------------------------------------------------------");
+			logger.debug("----------------------------END---------------------------------");
 			return -1;
 		}
 	}

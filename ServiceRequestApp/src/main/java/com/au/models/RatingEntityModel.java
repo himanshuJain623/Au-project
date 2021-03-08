@@ -8,7 +8,6 @@ public class RatingEntityModel {
 
 	public RatingEntityModel() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public RatingEntityModel(long bookingId, String ratingDescription, long ratingPoints) {

@@ -1,15 +1,11 @@
 package com.au.services;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.au.models.CustomerEntity;
 import com.au.models.EmailPasswordEntity;
 import com.au.models.ProviderEntity;
-import com.au.models.ServiceEntity;
 import com.au.models.UserTypeDetailEntity;
 import com.au.repositories.CustomerRepository;
 import com.au.repositories.ProviderRepository;

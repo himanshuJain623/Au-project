@@ -12,6 +12,7 @@ import com.au.models.BookingEntity;
 import com.au.models.ProviderBookingsModel;
 import com.au.models.ProviderDashboardModel;
 import com.au.models.ProviderEntity;
+import com.au.models.RatingEntity;
 import com.au.models.ServiceEntity;
 import com.au.models.ServiceProviderEntity;
 import com.au.models.ServiceProviderEntityModel;
@@ -129,6 +130,12 @@ public class ProviderEntityService {
 					booking.setServiceName(bE.getSpId().getForeignServiceId().getServiceName());
 					booking.setProviderName(bE.getSpId().getForeignProviderId().getProviderName());
 
+					if (ratingRepository.findByBookingId(bE) != null) {
+						RatingEntity re = ratingRepository.getRatingByBookingId(bE);
+						booking.setRatingDescription(re.getRatingDescription());
+						booking.setRatingPoints(re.getRatingPoints());
+					}
+
 					providerBookings.add(booking);
 
 				}
@@ -191,14 +198,14 @@ public class ProviderEntityService {
 				ServiceVsCustomerModel scm = new ServiceVsCustomerModel();
 				scm.setServiceName(spId.getForeignServiceId().getServiceName());
 				scm.setNumberOfCustomer(bookingRepository.getProviderServiceCustomers(spId));
-//				scm.setNumberOfCustomer(10);
 
 				for (BookingEntity bE : providerBookingEntities) {
 					if (bE.getBookingStatus().equals("Completed")) {
-						if (ratingRepository.findByBookingId(bE) != null) {
+						Long rs = ratingRepository.findByBookingId(bE);
+						if (rs != null) {
 							ratingSum += ratingRepository.getRatingPointsByBookingId(bE);
+							numberOfRatings++;
 						}
-						numberOfRatings++;
 						totalRevenue += bE.getBookingCost();
 						totalBookings++;
 						serviceBookings++;

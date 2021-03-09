@@ -20,9 +20,13 @@ public interface RatingRepository extends JpaRepository<RatingEntity, Long> {
 	@Query(value = "insert into ratings_details r values r.description = :description, r.rating = :ratingPoints , r.booking_id = :bookingId ", nativeQuery = true)
 	void saveRatingByOrderId(Long bookingId, String description, Long ratingPoints);
 
-	@Query(value = "select r.rating from ratings_details r where r.foreign_booking_Id = :bookingId", nativeQuery = true)
+	@Query("select r.ratingPoints from RatingEntity r where r.bookingId = ?1")
 	long getRatingPointsByBookingId(BookingEntity bookingId);
 
-	@Query(value = "select (distinct r.rating_id) from ratings_details r where r.foreign_booking_Id = :bookingId", nativeQuery = true)
-	RatingEntity findByBookingId(BookingEntity bE);
+	@Query("select r from RatingEntity r where r.bookingId = ?1")
+	RatingEntity getRatingByBookingId(BookingEntity bookingId);
+
+	@Query("select r.ratingId from RatingEntity r where r.bookingId = ?1")
+	Long findByBookingId(BookingEntity bookingId);
+
 }

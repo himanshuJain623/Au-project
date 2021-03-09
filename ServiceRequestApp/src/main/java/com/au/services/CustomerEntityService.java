@@ -83,7 +83,7 @@ public class CustomerEntityService {
 				cBE.setBookingCost(bE.getBookingCost());
 				cBE.setBookingDate(bE.getBookingDate());
 				cBE.setBookingStatus(bE.getBookingStatus());
-
+				cBE.setBookingId(bE.getBookingId());
 				bookingByCustomer.add(cBE);
 			}
 
@@ -108,12 +108,16 @@ public class CustomerEntityService {
 
 			BookingEntity b = bookingRepository.findByBookingId(ratingOfService.getBookingId());
 			if (b.getBookingStatus().equals("Completed")) {
-				RatingEntity r = new RatingEntity();
 
-				r.setBookingId(b);
+				RatingEntity r;
+				if (ratingRepository.findByBookingId(b) == null) {
+					r = new RatingEntity();
+					r.setBookingId(b);
+				} else {
+					r = ratingRepository.getRatingByBookingId(b);
+				}
 				r.setRatingDescription(ratingOfService.getRatingDescription());
 				r.setRatingPoints(ratingOfService.getRatingPoints());
-
 				r = ratingRepository.save(r);
 				return r;
 			} else {

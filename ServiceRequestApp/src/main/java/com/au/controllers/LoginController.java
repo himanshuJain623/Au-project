@@ -20,10 +20,20 @@ public class LoginController {
 	@Autowired
 	LoginEntityService login;
 
-	@PostMapping("")
-	public ResponseEntity<UserTypeDetailEntity> getUserType(@RequestBody EmailPasswordEntity user) {
+	@PostMapping("/customer")
+	public ResponseEntity<UserTypeDetailEntity> getCustomer(@RequestBody EmailPasswordEntity user) {
 
-		UserTypeDetailEntity details = login.getUserType(user);
+		UserTypeDetailEntity details = login.getCustomer(user);
+		if (details == null) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
+		return new ResponseEntity<>(details, new HttpHeaders(), HttpStatus.OK);
+	}
+
+	@PostMapping("/provider")
+	public ResponseEntity<UserTypeDetailEntity> getProvider(@RequestBody EmailPasswordEntity user) {
+
+		UserTypeDetailEntity details = login.getProvider(user);
 		if (details == null) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}

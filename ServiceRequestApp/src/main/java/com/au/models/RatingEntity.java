@@ -33,7 +33,7 @@ public class RatingEntity {
 	private long ratingPoints;
 
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "foreignBookingId", referencedColumnName = "bookingId")
+	@JoinColumn(name = "foreignBookingId", referencedColumnName = "bookingId", unique = true)
 	private BookingEntity bookingId;
 
 	public RatingEntity() {

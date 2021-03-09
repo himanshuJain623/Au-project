@@ -55,14 +55,14 @@ public class CustomerController {
 	}
 
 	@PostMapping("/rateService")
-	public ResponseEntity<RatingEntity> rateService(@RequestBody RatingEntityModel ratingOfService) {
+	public ResponseEntity<HttpStatus> rateService(@RequestBody RatingEntityModel ratingOfService) {
 
 		RatingEntity serviceRated = customerUser.rateService(ratingOfService);
 
 		if (serviceRated == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
-		return new ResponseEntity<>(serviceRated, HttpStatus.CREATED);
+		return ResponseEntity.status(HttpStatus.CREATED).build();
 
 	}
 

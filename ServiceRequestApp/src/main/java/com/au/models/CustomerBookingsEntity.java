@@ -9,19 +9,21 @@ public class CustomerBookingsEntity {
 	private String bookingStatus;
 	private Date bookingDate;
 	private long bookingCost;
+	private long bookingId;
 
 	public CustomerBookingsEntity() {
 		super();
 	}
 
 	public CustomerBookingsEntity(String providerName, String serviceName, String bookingStatus, Date bookingDate,
-			long bookingCost) {
+			long bookingCost, long bookingId) {
 		super();
 		this.providerName = providerName;
 		this.serviceName = serviceName;
 		this.bookingStatus = bookingStatus;
 		this.bookingDate = bookingDate;
 		this.bookingCost = bookingCost;
+		this.bookingId = bookingId;
 	}
 
 	public String getProviderName() {
@@ -62,6 +64,14 @@ public class CustomerBookingsEntity {
 
 	public void setBookingCost(long bookingCost) {
 		this.bookingCost = bookingCost;
+	}
+
+	public long getBookingId() {
+		return bookingId;
+	}
+
+	public void setBookingId(long bookingId) {
+		this.bookingId = bookingId;
 	}
 
 }

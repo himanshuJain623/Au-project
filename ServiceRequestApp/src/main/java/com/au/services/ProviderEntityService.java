@@ -10,12 +10,17 @@ import org.springframework.stereotype.Service;
 
 import com.au.models.BookingEntity;
 import com.au.models.ProviderBookingsModel;
+import com.au.models.ProviderDashboardModel;
 import com.au.models.ProviderEntity;
 import com.au.models.ServiceEntity;
 import com.au.models.ServiceProviderEntity;
 import com.au.models.ServiceProviderEntityModel;
+import com.au.models.ServiceVsBookingModel;
+import com.au.models.ServiceVsCustomerModel;
+import com.au.models.ServiceVsRevenueModel;
 import com.au.repositories.BookingRepository;
 import com.au.repositories.ProviderRepository;
+import com.au.repositories.RatingRepository;
 import com.au.repositories.ServiceProviderRepository;
 import com.au.repositories.ServiceRepository;
 
@@ -36,6 +41,9 @@ public class ProviderEntityService {
 
 	@Autowired
 	BookingEntityService bookingEntityService;
+
+	@Autowired
+	RatingRepository ratingRepository;
 
 	private static final Logger logger = LoggerFactory.getLogger(ProviderEntityService.class);
 
@@ -61,10 +69,10 @@ public class ProviderEntityService {
 					serviceToAdd.getDiscount(), serviceToAdd.getPrice());
 			return serviceProviderRespository.save(serviceToBeAdded);
 		} catch (Exception e) {
-			logger.debug(
+			System.out.println(
 					"------------------------------EXCEPTION IN ADDING SERVICE BY PROVIDER---------------------------------");
 			e.printStackTrace();
-			logger.debug("-------------------------------------------------------------");
+			System.out.println("-------------------------------------------------------------");
 			return null;
 		}
 	}
@@ -76,10 +84,10 @@ public class ProviderEntityService {
 			ProviderEntity p = providerRepository.findByProviderId(providerId);
 			return serviceProviderRespository.findByforeignProviderId(p);
 		} catch (Exception e) {
-			logger.debug(
+			System.out.println(
 					"------------------------------EXCEPTION IN GEETING ALL SERVICES BY PROVIDER---------------------------------");
 			e.printStackTrace();
-			logger.debug("-----------------------------END--------------------------------");
+			System.out.println("-----------------------------END--------------------------------");
 			return null;
 		}
 	}
@@ -93,10 +101,10 @@ public class ProviderEntityService {
 			return serviceProviderRespository.findByforeignProviderIdAndForeignServiceId(p, s);
 
 		} catch (Exception e) {
-			logger.debug(
+			System.out.println(
 					"------------------------------EXCEPTION IN GEETING SERVICES DETAILS PROVIDED BY PROVIDER---------------------------------");
 			e.printStackTrace();
-			logger.debug("-----------------------------END--------------------------------");
+			System.out.println("-----------------------------END--------------------------------");
 			return null;
 		}
 	}
@@ -127,10 +135,10 @@ public class ProviderEntityService {
 			}
 			return providerBookings;
 		} catch (Exception e) {
-			logger.debug(
+			System.out.println(
 					"------------------------------EXCEPTION IN GETTING BOOKING DETAILS PROVIDED BY PROVIDER IN PROVIDER_ENTITY_SERVICE---------------------------------");
 			e.printStackTrace();
-			logger.debug("----------------------------END---------------------------------");
+			System.out.println("----------------------------END---------------------------------");
 			return null;
 		}
 	}
@@ -145,11 +153,86 @@ public class ProviderEntityService {
 			bookingRepository.updateBookingStatus(bookingId, status);
 			return 1;
 		} catch (Exception e) {
-			logger.debug(
+			System.out.println(
 					"------------------------------EXCEPTION IN UPDATING STATUS IN PROVIDER_ENTITY_SERVICE---------------------------------");
 			e.printStackTrace();
-			logger.debug("----------------------------END---------------------------------");
+			System.out.println("----------------------------END---------------------------------");
 			return -1;
+		}
+	}
+
+	public ProviderDashboardModel getDashboardDetails(Long providerId) {
+		try {
+
+			ProviderDashboardModel pdm = new ProviderDashboardModel();
+			long ratingSum = 0;
+			float averageRating;
+			long numberOfRatings = 0;
+			long totalRevenue = 0;
+			long totalBookings = 0;
+			List<ServiceVsBookingModel> sbList = new ArrayList<>();
+			List<ServiceVsCustomerModel> scList = new ArrayList<>();
+			List<ServiceVsRevenueModel> srList = new ArrayList<>();
+
+			List<ServiceProviderEntity> speList = getServiceByProvider(providerId);
+
+			for (ServiceProviderEntity spId : speList) {
+
+				List<BookingEntity> providerBookingEntities = bookingEntityService.getServiceProviderBookings(spId);
+
+				ServiceVsBookingModel sbm = new ServiceVsBookingModel();
+				sbm.setServiceName(spId.getForeignServiceId().getServiceName());
+				long serviceBookings = 0;
+
+				ServiceVsRevenueModel srm = new ServiceVsRevenueModel();
+				srm.setServiceName(spId.getForeignServiceId().getServiceName());
+				long serviceRevenue = 0;
+
+				ServiceVsCustomerModel scm = new ServiceVsCustomerModel();
+				scm.setServiceName(spId.getForeignServiceId().getServiceName());
+				scm.setNumberOfCustomer(bookingRepository.getProviderServiceCustomers(spId));
+//				scm.setNumberOfCustomer(10);
+
+				for (BookingEntity bE : providerBookingEntities) {
+					if (bE.getBookingStatus().equals("Completed")) {
+						if (ratingRepository.findByBookingId(bE) != null) {
+							ratingSum += ratingRepository.getRatingPointsByBookingId(bE);
+						}
+						numberOfRatings++;
+						totalRevenue += bE.getBookingCost();
+						totalBookings++;
+						serviceBookings++;
+						serviceRevenue += bE.getBookingCost();
+					}
+				}
+				sbm.setNumberOfBookings(serviceBookings);
+				sbList.add(sbm);
+
+				srm.setServiceRevenue(serviceRevenue);
+				srList.add(srm);
+
+				scList.add(scm);
+			}
+
+			if (numberOfRatings == 0) {
+				averageRating = 0;
+			} else {
+				averageRating = (float) ((ratingSum * 1.0) / numberOfRatings);
+			}
+
+			pdm.setAverageRating(averageRating);
+			pdm.setTotalBookings(totalBookings);
+			pdm.setTotalRevenue(totalRevenue);
+			pdm.setProviderServiceBookings(sbList);
+			pdm.setProviderServiceCustomers(scList);
+			pdm.setProviderServiceRevenue(srList);
+			return pdm;
+		} catch (Exception e) {
+			System.out.println(
+					"------------------------------EXCEPTION IN GETTING DASHBOARD DETAILS IN PROVIDER_ENTITY_SERVICE---------------------------------");
+			e.printStackTrace();
+			System.out.println("----------------------------END---------------------------------");
+			return null;
 		}
 	}
 }

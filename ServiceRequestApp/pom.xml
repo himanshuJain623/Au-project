@@ -16,9 +16,6 @@
 	<description>Au project using Spring Boot of Service Request</description>
 	<properties>
 		<java.version>11</java.version>
-		<sonar.projectKey>himanshuJain623_Au-project</sonar.projectKey>
-		<sonar.organization>au-team-10</sonar.organization>
-		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -49,6 +46,13 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.sonarsource.scanner.maven/sonar-maven-plugin -->
+		<dependency>
+			<groupId>org.sonarsource.scanner.maven</groupId>
+			<artifactId>sonar-maven-plugin</artifactId>
+			<version>3.8.0.2131</version>
 		</dependency>
 
 	</dependencies>

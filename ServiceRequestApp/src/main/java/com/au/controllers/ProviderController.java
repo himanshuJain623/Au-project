@@ -1,6 +1,7 @@
 package com.au.controllers;
 
 import com.au.models.ProviderBookingsModel;
+import com.au.models.ProviderDashboardModel;
 import com.au.models.ProviderEntity;
 import com.au.models.ServiceProviderEntity;
 import com.au.models.ServiceProviderEntityModel;
@@ -89,5 +90,14 @@ public class ProviderController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 		return ResponseEntity.status(HttpStatus.CREATED).build();
+	}
+
+	@GetMapping("/dashboard")
+	public ResponseEntity<ProviderDashboardModel> getDashboardDetails(@RequestParam Long providerId) {
+		ProviderDashboardModel providerDashboard = provider.getDashboardDetails(providerId);
+		if (providerDashboard == null) {
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		}
+		return new ResponseEntity<>(providerDashboard, HttpStatus.OK);
 	}
 }

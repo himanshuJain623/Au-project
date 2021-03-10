@@ -22,10 +22,7 @@ public class ServiceEntityService {
 		try {
 			return serviceRepository.findAll();
 		} catch (Exception e) {
-			logger.debug(
-					"------------------------------EXCEPTION IN GEETING SERVICES IN SERVICE_ENTITY_SERVICE---------------------------------");
-			e.printStackTrace();
-			logger.debug("-----------------------------END--------------------------------");
+			logger.debug("EXCEPTION IN GEETING SERVICES IN SERVICE_ENTITY_SERVICE", e);
 			return null;
 
 		}
@@ -33,12 +30,11 @@ public class ServiceEntityService {
 
 	public ServiceEntity addService(ServiceEntity serviceToAdd) {
 		try {
-			return serviceRepository.save(serviceToAdd);
+			ServiceEntity sE = new ServiceEntity();
+			sE.setServiceName(serviceToAdd.getServiceName());
+			return serviceRepository.save(sE);
 		} catch (Exception e) {
-			logger.debug(
-					"------------------EXCEPTION IN ADDING SERVICE IN SERVICE_ENTITY_SERVICE------------------------");
-			e.printStackTrace();
-			logger.debug("-----------------END--------------------------");
+			logger.debug("EXCEPTION IN ADDING SERVICE IN SERVICE_ENTITY_SERVICE", e);
 			return null;
 		}
 	}

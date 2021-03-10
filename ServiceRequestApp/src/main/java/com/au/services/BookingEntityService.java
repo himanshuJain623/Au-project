@@ -33,10 +33,7 @@ public class BookingEntityService {
 		try {
 			return bookingRepository.findBySpId(spId);
 		} catch (Exception e) {
-			logger.debug(
-					"------------------------------EXCEPTION IN GETTING ALL BOOKINGS BY PROVIDER IN BOOKING_ENTITY_SERVICE---------------------------------");
-			e.printStackTrace();
-			logger.debug("-------------------------------------------------------------");
+			logger.debug("EXCEPTION IN GETTING ALL BOOKINGS BY PROVIDER IN BOOKING_ENTITY_SERVICE",e);
 			return null;
 		}
 	}
@@ -56,10 +53,7 @@ public class BookingEntityService {
 			b.setSpId(sPE);
 			return bookingRepository.save(b);
 		} catch (Exception e) {
-			logger.info(
-					"------------------------------EXCEPTION IN BOOKING SERVICE IN BOOKING_ENTITY_SERVICE---------------------------------");
-			e.printStackTrace();
-			logger.info("-------------------------------------------------------------");
+			logger.debug("EXCEPTION IN BOOKING SERVICE IN BOOKING_ENTITY_SERVICE",e);
 			return null;
 		}
 	}

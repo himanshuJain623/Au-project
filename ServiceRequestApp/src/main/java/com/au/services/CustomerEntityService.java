@@ -48,13 +48,16 @@ public class CustomerEntityService {
 	public CustomerEntity saveCustomer(CustomerEntity user) {
 
 		try {
-			return customerRepository.save(user);
+			CustomerEntity cE = new CustomerEntity();
+			cE.setCustomerName(user.getCustomerName());
+			cE.setCustomerEmail(user.getCustomerEmail());
+			cE.setCustomerLocation(user.getCustomerLocation());
+			cE.setCustomerPhone(user.getCustomerPhone());
+			cE.setPassword(user.getPassword());
+			return customerRepository.save(cE);
 
 		} catch (Exception e) {
-			logger.debug(
-					"------------------------------EXCEPTION IN SAVE CUSTOMER IN CUSTOMER_ENTITY_SERVICE---------------------------------");
-			e.printStackTrace();
-			logger.debug("------------------------------END-------------------------------");
+			logger.debug("EXCEPTION IN SAVE CUSTOMER IN CUSTOMER_ENTITY_SERVICE", e);
 			return null;
 		}
 	}
@@ -90,10 +93,7 @@ public class CustomerEntityService {
 			return bookingByCustomer;
 
 		} catch (Exception e) {
-			logger.debug(
-					"------------------------------EXCEPTION IN GEETING ALL SERVICES BY PROVIDER---------------------------------");
-			e.printStackTrace();
-			logger.debug("------------------------------END-------------------------------");
+			logger.debug("EXCEPTION IN GEETING ALL SERVICES BY PROVIDER", e);
 			return null;
 		}
 
@@ -124,10 +124,7 @@ public class CustomerEntityService {
 				return null;
 			}
 		} catch (Exception e) {
-			logger.debug(
-					"------------------------------EXCEPTION IN RATING SERVICE IN CUSTOMER_ENTITY_SERVICE---------------------------------");
-			e.printStackTrace();
-			logger.debug("---------------------------END----------------------------------");
+			logger.debug("EXCEPTION IN RATING SERVICE IN CUSTOMER_ENTITY_SERVICE", e);
 			return null;
 		}
 
@@ -140,10 +137,7 @@ public class CustomerEntityService {
 			return serviceProviderRepository.findByforeignServiceId(s);
 
 		} catch (Exception e) {
-			logger.debug(
-					"------------------------------EXCEPTION IN GETIING SERVICE PROVIDERS IN CUSTOMER_ENTITY_SERVICE---------------------------------");
-			e.printStackTrace();
-			logger.debug("-------------------------------------------------------------");
+			logger.debug("EXCEPTION IN GETIING SERVICE PROVIDERS IN CUSTOMER_ENTITY_SERVICE", e);
 			return null;
 		}
 	}

@@ -51,7 +51,13 @@ public class ProviderEntityService {
 	// for signing up provider
 	public ProviderEntity saveProvider(ProviderEntity user) {
 		try {
-			return providerRepository.save(user);
+			ProviderEntity pE = new ProviderEntity();
+			pE.setPassword(user.getPassword());
+			pE.setProviderEmail(user.getProviderEmail());
+			pE.setProviderLocation(user.getProviderLocation());
+			pE.setProviderName(user.getProviderName());
+			pE.setProviderPhone(user.getProviderPhone());
+			return providerRepository.save(pE);
 		} catch (Exception e) {
 			return null;
 		}
@@ -70,10 +76,7 @@ public class ProviderEntityService {
 					serviceToAdd.getDiscount(), serviceToAdd.getPrice());
 			return serviceProviderRespository.save(serviceToBeAdded);
 		} catch (Exception e) {
-			System.out.println(
-					"------------------------------EXCEPTION IN ADDING SERVICE BY PROVIDER---------------------------------");
-			e.printStackTrace();
-			System.out.println("-------------------------------------------------------------");
+			logger.debug("EXCEPTION IN ADDING SERVICE BY PROVIDER", e);
 			return null;
 		}
 	}
@@ -85,10 +88,7 @@ public class ProviderEntityService {
 			ProviderEntity p = providerRepository.findByProviderId(providerId);
 			return serviceProviderRespository.findByforeignProviderId(p);
 		} catch (Exception e) {
-			System.out.println(
-					"------------------------------EXCEPTION IN GEETING ALL SERVICES BY PROVIDER---------------------------------");
-			e.printStackTrace();
-			System.out.println("-----------------------------END--------------------------------");
+			logger.debug("EXCEPTION IN GEETING ALL SERVICES BY PROVIDE", e);
 			return null;
 		}
 	}
@@ -102,10 +102,7 @@ public class ProviderEntityService {
 			return serviceProviderRespository.findByforeignProviderIdAndForeignServiceId(p, s);
 
 		} catch (Exception e) {
-			System.out.println(
-					"------------------------------EXCEPTION IN GEETING SERVICES DETAILS PROVIDED BY PROVIDER---------------------------------");
-			e.printStackTrace();
-			System.out.println("-----------------------------END--------------------------------");
+			logger.debug("EXCEPTION IN GEETING SERVICES DETAILS PROVIDED BY PROVIDER", e);
 			return null;
 		}
 	}
@@ -142,10 +139,7 @@ public class ProviderEntityService {
 			}
 			return providerBookings;
 		} catch (Exception e) {
-			System.out.println(
-					"------------------------------EXCEPTION IN GETTING BOOKING DETAILS PROVIDED BY PROVIDER IN PROVIDER_ENTITY_SERVICE---------------------------------");
-			e.printStackTrace();
-			System.out.println("----------------------------END---------------------------------");
+			logger.debug("EXCEPTION IN GETTING BOOKING DETAILS PROVIDED BY PROVIDER IN PROVIDER_ENTITY_SERVICE", e);
 			return null;
 		}
 	}
@@ -160,10 +154,7 @@ public class ProviderEntityService {
 			bookingRepository.updateBookingStatus(bookingId, status);
 			return 1;
 		} catch (Exception e) {
-			System.out.println(
-					"------------------------------EXCEPTION IN UPDATING STATUS IN PROVIDER_ENTITY_SERVICE---------------------------------");
-			e.printStackTrace();
-			System.out.println("----------------------------END---------------------------------");
+			logger.debug("EXCEPTION IN UPDATING STATUS IN PROVIDER_ENTITY_SERVICE", e);
 			return -1;
 		}
 	}
@@ -235,10 +226,7 @@ public class ProviderEntityService {
 			pdm.setProviderServiceRevenue(srList);
 			return pdm;
 		} catch (Exception e) {
-			System.out.println(
-					"------------------------------EXCEPTION IN GETTING DASHBOARD DETAILS IN PROVIDER_ENTITY_SERVICE---------------------------------");
-			e.printStackTrace();
-			System.out.println("----------------------------END---------------------------------");
+			logger.debug("EXCEPTION IN GETTING DASHBOARD DETAILS IN PROVIDER_ENTITY_SERVICE", e);
 			return null;
 		}
 	}

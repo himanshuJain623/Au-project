@@ -28,9 +28,6 @@ public interface BookingRepository extends JpaRepository<BookingEntity, Long> {
 	@Query("update BookingEntity bE set bE.bookingStatus = ?2 where bE.bookingId = ?1")
 	void updateBookingStatus(long bookingId, String bookingStatus);
 
-//	@Query(value = "select count(b.fsp_Id) from bookings_details b where b.fsp_Id = :fspId group by b.customer_Id", nativeQuery = true)
-//	long getProviderServiceCustomers(ServiceProviderEntity fspId);
-//	
 	@Query(value = "select count(distinct b.customer_Id) from bookings_details b where b.fsp_Id = :fspId", nativeQuery = true)
 	long getProviderServiceCustomers(ServiceProviderEntity fspId);
 

@@ -19,7 +19,7 @@ public class ProviderBookingsModel {
 	}
 
 	public ProviderBookingsModel(Long bookingId, String providerName, String customerName, String serviceName,
-			String bookingStatus, Date bookingDate, Long bookingCost, String ratingDescription, long ratingPoints) {
+			String bookingStatus, Date bookingDate, Long bookingCost) {
 		super();
 		this.bookingId = bookingId;
 		this.providerName = providerName;
@@ -28,8 +28,6 @@ public class ProviderBookingsModel {
 		this.bookingStatus = bookingStatus;
 		this.bookingDate = bookingDate;
 		this.bookingCost = bookingCost;
-		this.ratingDescription = ratingDescription;
-		this.ratingPoints = ratingPoints;
 	}
 
 	public Long getBookingId() {

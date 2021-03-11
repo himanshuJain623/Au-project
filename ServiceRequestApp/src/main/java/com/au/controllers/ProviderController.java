@@ -26,11 +26,6 @@ public class ProviderController {
 	@Autowired
 	ProviderEntityService provider;
 
-	@GetMapping("/hello")
-	public String getHello() {
-		return "hello";
-	}
-
 	@PostMapping("/signup")
 	public ResponseEntity<ProviderEntity> addUser(@RequestBody ProviderEntity user) {
 		ProviderEntity createdUser = provider.saveProvider(user);

@@ -21,11 +21,6 @@ public class ServiceController {
 	@Autowired
 	ServiceEntityService service;
 
-	@GetMapping("/hello")
-	public String getHello() {
-		return "hello";
-	}
-
 	@GetMapping("")
 	public ResponseEntity<List<ServiceEntity>> getAllServices() {
 		List<ServiceEntity> list = service.getAllServices();

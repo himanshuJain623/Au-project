@@ -20,10 +20,13 @@ public interface CustomerRepository extends JpaRepository<CustomerEntity, Long> 
 
 	CustomerEntity findByCustomerId(long id);
 
-	@Query(value = "select exists(select * from customer_details c where c.customer_email= :userEmail and c.password = :password)", nativeQuery = true)
-	long findIfUser(String userEmail, String password);
+	@Query(value = "select exists(select * from customer_details c where c.customer_email= :userEmail)", nativeQuery = true)
+	long findIfUser(String userEmail);
 
-	@Query(value = "select c.customer_id from customer_details c where c.customer_email= :userEmail and c.password = :password", nativeQuery = true)
-	long findUserId(String userEmail, String password);
+	@Query(value = "select c.customer_id from customer_details c where c.customer_email= :userEmail", nativeQuery = true)
+	long findUserId(String userEmail);
+
+	@Query(value = "select c.password from customer_details c where c.customer_email= :userEmail", nativeQuery = true)
+	String getCustomerPassword(String userEmail);
 
 }

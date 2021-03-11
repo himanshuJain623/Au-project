@@ -11,10 +11,13 @@ public interface ProviderRepository extends JpaRepository<ProviderEntity, Long> 
 
 	ProviderEntity findByProviderId(Long providerId);
 
-	@Query(value = "select exists(select * from provider_details p where p.provider_email = :userEmail and p.password = :password)", nativeQuery = true)
-	long findIfUser(String userEmail, String password);
+	@Query(value = "select exists(select * from provider_details p where p.provider_email = :userEmail)", nativeQuery = true)
+	long findIfUser(String userEmail);
 
-	@Query(value = "select p.provider_id from provider_details p where p.provider_email= :userEmail and p.password = :password", nativeQuery = true)
-	long findUserId(String userEmail, String password);
+	@Query(value = "select p.provider_id from provider_details p where p.provider_email= :userEmail", nativeQuery = true)
+	long findUserId(String userEmail);
+
+	@Query(value = "select p.password from provider_details p where p.provider_email= :userEmail", nativeQuery = true)
+	String getProviderPassword(String userEmail);
 
 }

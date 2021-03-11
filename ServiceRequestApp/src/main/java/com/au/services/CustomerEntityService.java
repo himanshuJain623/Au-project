@@ -3,6 +3,7 @@ package com.au.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +54,7 @@ public class CustomerEntityService {
 			cE.setCustomerEmail(user.getCustomerEmail());
 			cE.setCustomerLocation(user.getCustomerLocation());
 			cE.setCustomerPhone(user.getCustomerPhone());
-			cE.setPassword(user.getPassword());
+			cE.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
 			return customerRepository.save(cE);
 
 		} catch (Exception e) {

@@ -3,6 +3,7 @@ package com.au.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,7 @@ public class ProviderEntityService {
 	public ProviderEntity saveProvider(ProviderEntity user) {
 		try {
 			ProviderEntity pE = new ProviderEntity();
-			pE.setPassword(user.getPassword());
+			pE.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
 			pE.setProviderEmail(user.getProviderEmail());
 			pE.setProviderLocation(user.getProviderLocation());
 			pE.setProviderName(user.getProviderName());
